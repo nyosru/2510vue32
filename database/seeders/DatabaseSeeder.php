@@ -21,7 +21,9 @@ class DatabaseSeeder extends Seeder
 //            'name' => '111',
 //            'email' => 'test'.rand().'@example.com',
 //        ]);
+
         $this->call(ServiceSeeder::class);
         $this->call(TaskSeeder::class);
+        $this->call(BookingSeeder::class);
     }
 }

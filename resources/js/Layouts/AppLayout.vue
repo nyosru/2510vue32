@@ -98,6 +98,12 @@ const showingNavigationDropdown = ref(false);
                 >
                 https://nyosru.github.io/2510vue32/task.pdf
                 </a>
+<br/>
+                прочитайте readme:
+                <a href="https://github.com/nyosru/2510vue32" target="_blank"
+                   class="text-blue-600 hover:underline"
+                >https://github.com/nyosru/2510vue32
+                </a>
             </div>
             <div class="w-full sm:w-1/2 text-center">
                 <div class="flex flex-row items-center justify-center">
