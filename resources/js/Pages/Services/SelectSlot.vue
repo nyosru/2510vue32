@@ -77,7 +77,7 @@ const selectSlot = (slot) => {
         </div>
 
         <div v-if="selectedSlot" class="mt-2 text-sm text-gray-500">
-            Вы выбрали: {{ selectedSlot }}
+<!--            Вы выбрали: {{ selectedSlot }}-->
             <!--                :slot="selectedSlot"-->
 
             <BookingForm

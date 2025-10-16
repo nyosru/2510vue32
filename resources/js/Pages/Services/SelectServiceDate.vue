@@ -138,9 +138,6 @@ const formatDateLabel = (date) => {
             />
 
             <br/>
-            <br/>
-<!--            SelectSlot-->
-            <br/>
         <SelectSlot
             :service-id="selectedService.id"
             :date="selectedDate"

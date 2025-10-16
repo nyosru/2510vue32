@@ -96,7 +96,7 @@ const showingNavigationDropdown = ref(false);
         </header>
 
         <!-- Контент -->
-        <main>
+        <main class="min-h-[60vh]">
             <slot/>
         </main>
 
@@ -105,7 +105,20 @@ const showingNavigationDropdown = ref(false);
                 Тест задание создал Сергей Бакланов
             </div>
             <div class="w-full sm:w-1/2 text-center">
-                <A href="https://php-cat.com">php-cat.com</A>
+                <div class="flex flex-row items-center justify-center">
+                    <div>
+                        <a href="https://php-cat.com" class="whitespace-nowrap text-blue-600 hover:underline" target="_blank">
+                            <img src="https://php-cat.com/phpcat/cat.png" style="max-height: 60px;" class="inline-block ">
+                        </a>
+                    </div>
+                    <div>
+                        Создание сайта<br>
+                        <a href="https://php-cat.com" class="whitespace-nowrap text-blue-600 hover:underline" target="_blank"
+                           style="color: blue; ">
+                            &nbsp;php-cat.com
+                        </a>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>

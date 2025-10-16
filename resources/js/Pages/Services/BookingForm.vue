@@ -56,7 +56,9 @@ const bookSlot = async () => {
 </script>
 
 <template>
-    <div class="mt-4 space-y-2 p-4 bg-gray-50 rounded-lg">
+    <div class="mt-4 space-y-2 p-4
+        max-w-[500px]
+        bg-gradient-to-br from-gray-100 to-blue-100 rounded-lg">
         <input
             type="text"
             placeholder="Ваше имя"
