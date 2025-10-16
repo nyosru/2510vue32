@@ -18,7 +18,6 @@ const props = defineProps({
 const slots = ref([])
 const selectedSlot = ref(null)
 const loading = ref(false)
-const showSuccessModal = ref(false)
 
 // Загрузка доступных слотов
 const loadSlots = async () => {
@@ -45,15 +44,12 @@ const selectSlot = (slot) => {
     selectedSlot.value = slot
 }
 
-const onBooked = async () => {
-    selectedSlot.value = null
-    showSuccessModal.value = true
-    await loadSlots()
-}
+// const onBooked = async () => {
+//     selectedSlot.value = null
+//     await loadSlots()
+//     emit('booked')
+// }
 
-const closeModal = async () => {
-    showSuccessModal.value = false
-}
 
 </script>
 
@@ -72,7 +68,7 @@ const closeModal = async () => {
                 :key="slot.time"
                 @click="selectSlot(slot.time)"
                 class="px-3 py-2 border rounded-lg transition"
-                :class="selectedSlot === slot
+                :class="selectedSlot === slot.time
                     ? 'bg-blue-600 text-white border-blue-600'
                     : 'bg-gray-100 hover:bg-blue-50 border-gray-300 text-gray-800'"
             >
@@ -94,22 +90,6 @@ const closeModal = async () => {
         </div>
 
 
-        <!-- ✅ Модальное окно -->
-        <div
-            v-if="showSuccessModal"
-            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-        >
-            <div class="bg-white p-6 rounded-xl shadow-xl w-80 text-center">
-                <h2 class="text-xl font-semibold mb-2 text-green-600">✅ Успешно!</h2>
-                <p class="text-gray-700 mb-4">Ваше бронирование подтверждено.</p>
-                <button
-                    @click="closeModal"
-                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-                >
-                    ОК
-                </button>
-            </div>
-        </div>
 
 
     </div>

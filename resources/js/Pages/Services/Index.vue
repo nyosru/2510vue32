@@ -2,12 +2,27 @@
 import AppLayout from '../../Layouts/AppLayout.vue'
 import SelectServiceDate from './SelectServiceDate.vue'
 
+import {ref} from "vue";
+
 defineProps({
     items: {
         type: Array,
         default: () => []
     }
 })
+
+const showSuccessModal = ref(false)
+
+const onBooked = async () => {
+    // selectedSlot.value = null
+    // await loadSlots()
+    showSuccessModal.value = true
+}
+
+const closeModal = async () => {
+    showSuccessModal.value = false
+}
+
 
 
 </script>
@@ -37,6 +52,7 @@ defineProps({
             <div>
                 SelectServiceDate<br/>
                 <SelectServiceDate :services="items"/>
+
 
 
             </div>

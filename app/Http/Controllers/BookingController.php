@@ -10,6 +10,27 @@ use Carbon\Carbon;
 class BookingController extends Controller
 {
 
+    public function index(Request $request)
+    {
+        $request->validate([
+            'date' => 'required|date',
+            'service_id' => 'required|integer',
+        ]);
+
+        $bookings = Booking::whereDate('date', $request->date)
+            ->where('service_id', $request->service_id)
+            ->orderBy('time')
+            ->get();
+
+        return response()->json($bookings);
+    }
+
+    public function destroy(Booking $booking)
+    {
+        $booking->delete();
+        return response()->json(['status' => 'deleted']);
+    }
+
     public function availableSlots(Request $request)
     {
         $request->validate([
@@ -81,7 +102,7 @@ class BookingController extends Controller
         $service = Service::find($request->service_id);
         $date = Carbon::parse($request->date);
         $start = Carbon::parse("{$request->date} {$request->times}");
-        $end = $start->copy()->addMinutes($service->duration + 30);
+        $end = $start->copy()->addMinutes($service->duration + 29);
 
         // проверка по времени (10:00–20:00)
         if ($start->hour < 10 || $end->hour >= 20 || $date->isSunday()) {

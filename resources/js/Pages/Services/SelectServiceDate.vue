@@ -1,8 +1,14 @@
 <script setup>
 
 import SelectSlot from './SelectSlot.vue'
+import BookingList from './BookingList.vue'
 
 import { ref, watch, defineProps, defineEmits, computed } from 'vue'
+import ModalGood from "@/Pages/Services/Modal.vue";
+
+import { useModalStore } from '@/stores/modal'
+
+const modalStore = useModalStore()
 
 const emit = defineEmits(['selection-changed'])
 
@@ -17,6 +23,18 @@ const props = defineProps({
 const selectedService = ref(null)
 const selectedDate = ref('')
 
+// Наблюдаем за показом модального окна
+watch(
+    () => modalStore.showSuccessModal,
+    (newVal) => {
+        if (newVal) {
+            // Сбрасываем значения при показе success modal
+            selectedService.value = null
+            selectedDate.value = ''
+        }
+    }
+)
+
 // Генерируем массив дат на 7 дней вперёд
 const weekDates = computed(() => {
     const dates = []
@@ -24,7 +42,10 @@ const weekDates = computed(() => {
     for (let i = 0; i < 7; i++) {
         const d = new Date(today)
         d.setDate(today.getDate() + i)
-        dates.push(d)
+        // Пропускаем воскресенье (0 — это воскресенье)
+        if (d.getDay() !== 1) {
+            dates.push(d)
+        }
     }
     return dates
 })
@@ -82,7 +103,7 @@ const formatDateLabel = (date) => {
 
         <!-- Кнопки выбора даты (появляются после выбора услуги) -->
         <div v-if="selectedService" class="mt-4">
-            <label class="block mb-2 text-gray-700">Выберите дату</label>
+            <label class="block mb-2 text-gray-700">Выберите дату <sup>(воскресений просто нет в списке)</sup></label>
             <div class="flex flex-wrap gap-2">
                 <button
                     v-for="date in weekDates"
@@ -93,7 +114,11 @@ const formatDateLabel = (date) => {
                         ? 'bg-blue-600 text-white border-blue-600'
                         : 'bg-gray-100 hover:bg-blue-50 border-gray-300 text-gray-800'"
                 >
-                    {{ formatDateLabel(date) }}
+<!--                    {{ formatDateLabel(date) }}-->
+<!--                    //-->
+                    {{ date.toISOString().split('T')[0] }}
+<!--                    //-->
+<!--                    {{ date }}-->
                 </button>
             </div>
         </div>
@@ -106,12 +131,23 @@ const formatDateLabel = (date) => {
         <!--            xv-if="selectedServiceId && selectedDate"-->
 <!--                    service-id="selectedServiceId"-->
         <div v-if="selectedService && selectedDate" >
-            SelectSlot<br/>
+
+            <BookingList
+                :service-id="selectedService.id"
+                :date="selectedDate"
+            />
+
+            <br/>
+            <br/>
+<!--            SelectSlot-->
+            <br/>
         <SelectSlot
             :service-id="selectedService.id"
             :date="selectedDate"
         />
         </div>
+
+        <ModalGood />
 
     </div>
 </template>

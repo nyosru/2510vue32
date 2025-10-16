@@ -1,6 +1,7 @@
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue'
 import axios from 'axios'
+import { useModalStore } from '@/stores/modal'
 
 const props = defineProps({
     serviceId: {
@@ -23,6 +24,8 @@ const clientName = ref('')
 const clientPhone = ref('')
 const message = ref('')
 
+const modal = useModalStore() // ✅ доступ к стору
+
 // Создание бронирования
 const bookSlot = async () => {
     if (!clientName.value || !clientPhone.value) {
@@ -40,7 +43,8 @@ const bookSlot = async () => {
         })
         message.value = 'Бронирование успешно создано'
         // уведомляем родителя
-        emit('booked')
+        // emit('booked')
+        modal.openSuccess('Бронирование успешно создано! ✅')
         // сброс полей
         clientName.value = ''
         clientPhone.value = ''
