@@ -8,6 +8,32 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Схема проекта по вью компонентам
+
+0   Старт
+
+    resources/js/Pages/Services/Index.vue
+
+0.1 Модальное окошко
+
+    resources/js/Pages/Services/Modal.vue
+
+1   Базовый показ списка услуг и выбор даты
+ 
+        resources/js/Pages/Services/SelectServiceDate.vue
+
+2   когда выбрали дату, показ слотов времени для бронирования (и внутри список текущих бронирований)
+
+    resources/js/Pages/Services/SelectSlot.vue
+
+3 форма для брони (во входящих есть номер услуги, дата, время) 
+
+    resources/js/Pages/Services/BookingForm.vue
+
+3.1 показ текущих броней (когда выбрана дата и услуга)
+
+    resources/js/Pages/Services/BookingList.vue
+
 ## Штуки что пришли в голову
 
 - после конца времени бронирования, добавляю не 30 минут а 29, чтобы следующее начало было свободно а не занято, например бронь в 10 часов на пол часа ... будет занято время до 10:59 и 11:00 уже свободно можно броинровать  

@@ -19,7 +19,9 @@
                     flex-row"
                 >
 
-                    <div class="font-medium">{{ booking.client_name }}</div>
+                    <div><div class="font-medium">{{ booking.client_name }}</div>
+
+                        {{ booking.client_phone }}</div>
                     <div class="text-sm text-gray-500">{{ booking.time }}</div>
                     <div class="text-sm text-gray-500">{{ booking.end_time }}</div>
                     <div>

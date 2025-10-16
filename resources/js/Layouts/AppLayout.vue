@@ -12,34 +12,22 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div class="min-h-screen bg-gray-100">
-        <!-- Навигация -->
+
         <nav class="border-b border-gray-100 bg-white">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex h-16 justify-between">
                     <div class="flex">
-                        <!-- Логотип -->
+
                         <div class="flex shrink-0 items-center">
-                            <!--                            <Link :href="route('dashboard')">-->
+
                             <ApplicationLogo
                                 class="block h-9 w-auto fill-current text-gray-800"
                             />
-                            <!--                            </Link>-->
+
                         </div>
 
                         <!-- Меню -->
                         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                            <!--                            <NavLink-->
-                            <!--                                :href="route('dashboard')"-->
-                            <!--                                :active="route().current('dashboard')"-->
-                            <!--                            >-->
-                            <!--                                Главная-->
-                            <!--                            </NavLink>-->
-                            <NavLink
-                                :href="route('tasks.index')"
-                                :active="route().current('tasks.index')"
-                            >
-                                Задачи
-                            </NavLink>
                             <NavLink
                                 :href="route('services')"
                                 :active="route().current('services')"
@@ -47,6 +35,7 @@ const showingNavigationDropdown = ref(false);
                                 Сервисы
                             </NavLink>
                         </div>
+
                     </div>
 
                     <!-- Кнопка бургер -->
@@ -103,6 +92,12 @@ const showingNavigationDropdown = ref(false);
         <footer class="flex flex-col sm:flex-row py-8">
             <div class="w-full sm:w-1/2 text-center">
                 Тест задание создал Сергей Бакланов
+                <br/>
+                <a href="https://nyosru.github.io/2510vue32/task.pdf" target="_blank"
+                class="text-blue-600 hover:underline"
+                >
+                https://nyosru.github.io/2510vue32/task.pdf
+                </a>
             </div>
             <div class="w-full sm:w-1/2 text-center">
                 <div class="flex flex-row items-center justify-center">

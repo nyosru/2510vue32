@@ -3,10 +3,10 @@
 import SelectSlot from './SelectSlot.vue'
 import BookingList from './BookingList.vue'
 
-import { ref, watch, defineProps, defineEmits, computed } from 'vue'
+import {ref, watch, defineProps, defineEmits, computed} from 'vue'
 import ModalGood from "@/Pages/Services/Modal.vue";
 
-import { useModalStore } from '@/stores/modal'
+import {useModalStore} from '@/stores/modal'
 
 const modalStore = useModalStore()
 
@@ -53,7 +53,7 @@ const weekDates = computed(() => {
 // Отслеживаем выбор
 watch([selectedService, selectedDate], ([service, date]) => {
     if (service && date) {
-        emit('selection-changed', { serviceId: service.id, date })
+        emit('selection-changed', {serviceId: service.id, date})
     }
 })
 
@@ -70,7 +70,7 @@ const selectDate = (date) => {
 
 // Формат отображения кнопки даты
 const formatDateLabel = (date) => {
-    const options = { weekday: 'short', day: 'numeric', month: 'short' }
+    const options = {weekday: 'short', day: 'numeric', month: 'short'}
     return date.toLocaleDateString('ru-RU', options)
 }
 </script>
@@ -114,11 +114,11 @@ const formatDateLabel = (date) => {
                         ? 'bg-blue-600 text-white border-blue-600'
                         : 'bg-gray-100 hover:bg-blue-50 border-gray-300 text-gray-800'"
                 >
-<!--                    {{ formatDateLabel(date) }}-->
-<!--                    //-->
+                    <!--                    {{ formatDateLabel(date) }}-->
+                    <!--                    //-->
                     {{ date.toISOString().split('T')[0] }}
-<!--                    //-->
-<!--                    {{ date }}-->
+                    <!--                    //-->
+                    <!--                    {{ date }}-->
                 </button>
             </div>
         </div>
@@ -128,23 +128,24 @@ const formatDateLabel = (date) => {
             Вы выбрали: {{ selectedDate }}
         </div>
 
-        <!--            xv-if="selectedServiceId && selectedDate"-->
-<!--                    service-id="selectedServiceId"-->
-        <div v-if="selectedService && selectedDate" >
-
-            <BookingList
-                :service-id="selectedService.id"
-                :date="selectedDate"
-            />
-
-            <br/>
-        <SelectSlot
-            :service-id="selectedService.id"
-            :date="selectedDate"
-        />
+        <div v-if="selectedService && selectedDate"
+             class="w-full flex flex-col sm:flex-row sm:space-x-3"
+        >
+            <div class="w-full sm:w-1/2">
+                <SelectSlot
+                    :service-id="selectedService.id"
+                    :date="selectedDate"
+                />
+            </div>
+            <div class="w-full sm:w-1/2">
+                <BookingList
+                    :service-id="selectedService.id"
+                    :date="selectedDate"
+                />
+            </div>
         </div>
 
-        <ModalGood />
+    <ModalGood/>
 
     </div>
 </template>
