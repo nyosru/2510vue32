@@ -9,17 +9,78 @@ use Carbon\Carbon;
 
 class BookingController extends Controller
 {
+
+    public function availableSlots(Request $request)
+    {
+        $request->validate([
+            'service_id' => 'required|exists:services,id',
+            'date' => 'required|date',
+        ]);
+
+        $service = Service::findOrFail($request->service_id);
+        $date = Carbon::parse($request->date);
+
+        // Запрет на воскресенье
+        if ($date->isSunday()) {
+            return response()->json([]);
+        }
+
+        $startHour = 10;
+        $endHour = 20;
+
+        $slotDuration = $service->duration + 30; // длительность услуги + 30 мин
+
+        // Генерируем слоты каждые 30 минут
+        $slots = [];
+        $time = $date->copy()->setHour($startHour)->setMinute(0);
+        $endTime = $date->copy()->setHour($endHour)->setMinute(0);
+
+        while ($time->addMinutes(0)->lessThan($endTime)) {
+            $slotEnd = $time->copy()->addMinutes($slotDuration);
+
+            // Проверка на выход за пределы 20:00
+            if ($slotEnd->hour >= $endHour && $slotEnd->minute > 0) {
+                break;
+            }
+
+            // Проверка пересечения с существующими бронированиями
+            $conflict = Booking::where('service_id', $service->id)
+                ->whereDate('date', $date->toDateString())
+                ->where(function($q) use ($time, $slotEnd) {
+                    $q->whereBetween('time', [$time->format('H:i'), $slotEnd->format('H:i')])
+                        ->orWhereBetween('end_time', [$time->format('H:i'), $slotEnd->format('H:i')])
+                        ->orWhere(function($q2) use ($time, $slotEnd) {
+                            $q2->where('time', '<', $time->format('H:i'))
+                                ->where('end_time', '>', $slotEnd->format('H:i'));
+                        });
+                })
+                ->exists();
+
+            if (!$conflict) {
+                $slots[] = [
+                    'time' => $time->format('H:i'),
+                ];
+            }
+
+            $time->addMinutes(30);
+        }
+
+        return response()->json($slots);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
             'service_id' => 'required|exists:services,id',
             'date' => 'required|date',
-            'time' => 'required'
+            'times' => 'required',
+            'client_name' => 'required',
+            'client_phone' => 'required'
         ]);
 
         $service = Service::find($request->service_id);
         $date = Carbon::parse($request->date);
-        $start = Carbon::parse("{$request->date} {$request->time}");
+        $start = Carbon::parse("{$request->date} {$request->times}");
         $end = $start->copy()->addMinutes($service->duration + 30);
 
         // проверка по времени (10:00–20:00)
@@ -43,7 +104,7 @@ class BookingController extends Controller
         Booking::create([
             'service_id' => $service->id,
             'date' => $date->format('Y-m-d'),
-            'start_time' => $start->format('H:i'),
+            'time' => $start->format('H:i'),
             'end_time' => $end->format('H:i'),
             'client_name' => $request->client_name,
             'client_phone' => $request->client_phone,

@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '../../Layouts/AppLayout.vue'
-import ServiceBookingForm from './ServiceBookingForm.vue'
+import SelectServiceDate from './SelectServiceDate.vue'
 
 defineProps({
     items: {
@@ -8,6 +8,8 @@ defineProps({
         default: () => []
     }
 })
+
+
 </script>
 
 <template>
@@ -21,21 +23,24 @@ defineProps({
             </h2>
         </template>
 
-        <div class="flex flex-row md:flex-col">
-            <div class="py-12">
-                <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <ul v-if="items.length">
-                        <li v-for="i in items" :key="i.id">
-                            {{ i.name }} — {{ i.duration }}
-                        </li>
-                    </ul>
-                    <p v-else>нет данных</p>
-                </div>
-            </div>
+<!--        <div class="flex flex-row md:flex-col">-->
+<!--            <div class="py-12">-->
+<!--                <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">-->
+<!--                    <ul v-if="items.length">-->
+<!--                        <li v-for="i in items" :key="i.id">-->
+<!--                            {{ i.name }} — {{ i.duration }}-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                    <p v-else>нет данных</p>-->
+<!--                </div>-->
+<!--            </div>-->
             <div>
-                <ServiceBookingForm :services="items"/>
+                SelectServiceDate<br/>
+                <SelectServiceDate :services="items"/>
+
+
             </div>
-        </div>
+<!--        </div>-->
     </AppLayout>
 
 </template>

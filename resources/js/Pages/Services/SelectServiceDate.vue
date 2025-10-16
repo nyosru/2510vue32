@@ -1,4 +1,7 @@
 <script setup>
+
+import SelectSlot from './SelectSlot.vue'
+
 import { ref, watch, defineProps, defineEmits, computed } from 'vue'
 
 const emit = defineEmits(['selection-changed'])
@@ -99,5 +102,16 @@ const formatDateLabel = (date) => {
             Длительность услуги: {{ selectedService.duration }} мин<br>
             Вы выбрали: {{ selectedDate }}
         </div>
+
+        <!--            xv-if="selectedServiceId && selectedDate"-->
+<!--                    service-id="selectedServiceId"-->
+        <div v-if="selectedService && selectedDate" >
+            SelectSlot<br/>
+        <SelectSlot
+            :service-id="selectedService.id"
+            :date="selectedDate"
+        />
+        </div>
+
     </div>
 </template>

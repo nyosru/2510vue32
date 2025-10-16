@@ -16,8 +16,10 @@ return new class extends Migration
 
             $table->foreignId('service_id')->constrained()->cascadeOnDelete();
             $table->date('date');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->time('time');     // начало бронирования
+            $table->time('end_time'); // конец бронирования
+            $table->string('client_name');
+            $table->string('client_phone');
 
             $table->timestamps();
         });
