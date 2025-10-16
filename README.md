@@ -8,6 +8,18 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## таблицы БД и Отношения
+
+- services
+  - название услуги
+  - время оказания
+- bookings 
+  - дату, 
+  - время старта и финиша, 
+  - ссылку на услугу (отношение к сервисам) 
+  - фио клиента
+  - телефон клиента
+
 ## Схема проекта по вью компонентам
 
 0   Старт

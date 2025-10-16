@@ -17,7 +17,6 @@ class BookingSeeder extends Seeder
     {
         // Данные для конкретных бронирований
         $bookings = [
-            ['service_id' => 1, 'times' => ['13:00', '16:00']],
             ['service_id' => 1, 'times' => ['10:00', '11:00', '13:00', '18:00']],
             ['service_id' => 2, 'times' => ['10:00']],
             ['service_id' => 3, 'times' => ['10:00', '11:30', '18:30']],
