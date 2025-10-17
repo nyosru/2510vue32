@@ -43,7 +43,7 @@ const weekDates = computed(() => {
         const d = new Date(today)
         d.setDate(today.getDate() + i)
         // Пропускаем воскресенье (0 — это воскресенье)
-        if (d.getDay() !== 1) {
+        if (d.getDay() !== 0) {
             dates.push(d)
         }
     }

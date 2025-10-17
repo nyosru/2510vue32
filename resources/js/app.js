@@ -25,7 +25,7 @@ createInertiaApp({
         // ✅ подключаем pinia и inertia plugin
         const app = createApp({ render: () => h(App, props) })
             .use(plugin)
-            .use(pinia) // <--- вот это добавляем
+            .use(pinia)
             .use(ZiggyVue)
 
         app.mount(el)
