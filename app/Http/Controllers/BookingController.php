@@ -111,6 +111,7 @@ class BookingController extends Controller
 
         // проверка пересечения
         $hasConflict = Booking::where('date', $request->date)
+            ->where('service_id', $request->service_id)
             ->get()
             ->contains(function ($b) use ($start, $end) {
                 $bStart = Carbon::parse("{$b->date} {$b->start_time}");
