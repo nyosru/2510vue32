@@ -68,6 +68,7 @@ class BookingController extends Controller
             $conflict = Booking::where('service_id', $service->id)
                 ->whereDate('date', $date->toDateString())
                 ->where(function($q) use ($time, $slotEnd) {
+
                     $q->whereBetween('time', [$time->format('H:i'), $slotEnd->format('H:i')])
                         ->orWhereBetween('end_time', [$time->format('H:i'), $slotEnd->format('H:i')])
                         ->orWhere(function($q2) use ($time, $slotEnd) {
@@ -101,7 +102,11 @@ class BookingController extends Controller
 
         $service = Service::find($request->service_id);
         $date = Carbon::parse($request->date);
-        $start = Carbon::parse("{$request->date} {$request->times}");
+//        $start = Carbon::parse("{$request->date} {$request->times}");
+
+        $dateTimeStr = $date->format('Y-m-d') . ' ' . $request->times;
+        $start = Carbon::parse($dateTimeStr);
+
         $end = $start->copy()->addMinutes($service->duration + 29);
 
         // проверка по времени (10:00–20:00)
@@ -112,15 +117,23 @@ class BookingController extends Controller
         // проверка пересечения
         $hasConflict = Booking::where('date', $request->date)
             ->where('service_id', $request->service_id)
-            ->get()
-            ->contains(function ($b) use ($start, $end) {
-                $bStart = Carbon::parse("{$b->date} {$b->start_time}");
-                $bEnd = Carbon::parse("{$b->date} {$b->end_time}");
-                return $start->lt($bEnd) && $end->gt($bStart);
-            });
+            ->whereBetween('time', [$start->hour.':'.$start->minute.':00', $end->hour.':'.$end->minute.':00'])
+            ->get();
 
-        if ($hasConflict) {
-            return response()->json(['error' => 'Время уже занято'], 422);
+//        dump($hasConflict->toArray());
+
+        if ( !empty($hasConflict->count() ) ) {
+
+//            $e = '--'.serialize($hasConflict->toArray()).'--';
+//            foreach($hasConflict as $conflict) {
+//                $e .= "\n".
+//                    "\n".
+//                    "\n".'---------- '.$conflict->service_id.' --- '.
+//                    $conflict->date.' '.$conflict->time.' - '.$conflict->end_time;
+//                $e .= "\n".json_encode($conflict->toArray());
+//            }
+
+            return response()->json(['error' => 'Время занято ( ошибка №'.__LINE__.' )'], 422);
         }
 
         Booking::create([

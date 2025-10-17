@@ -50,7 +50,8 @@ const bookSlot = async () => {
         clientPhone.value = ''
     } catch (e) {
         console.error(e)
-        message.value = 'Ошибка при бронировании'
+        // message.value = 'Ошибка при бронировании'
+        message.value = e.response.data.error
     }
 }
 </script>
