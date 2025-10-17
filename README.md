@@ -8,6 +8,10 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## где посмотреть, покликать
+
+вот тут https://2510vue3.php-cat.com/
+
 ## таблицы БД и Отношения
 
 - services
